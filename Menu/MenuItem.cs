@@ -1,8 +1,16 @@
 ﻿using PongNet.Common;
 
-namespace PongNet.Menu
+/*
+	- Nowa gra
+	- Ustawienia
+		- Pełny ekran
+		- Limit punktów
+	- Koniec
+*/
+
+namespace PongNet.Game.Menu
 {
-	public class Menu : StatableGameComponent<MenuStates>
+	public class MenuItem : StatableGameComponent<MenuStates>
 	{
 		public event EventHandler Enter;
 		public event EventHandler Leave;

@@ -1,4 +1,4 @@
-﻿namespace PongNet
+﻿namespace PongNet.Game
 {
 	partial class MainForm
 	{

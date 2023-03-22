@@ -1,15 +1,18 @@
-namespace PongNet
+using PongNet.Game.Menu;
+
+namespace PongNet.Game
 {
 	public partial class MainForm : Form
 	{
-		private Menu.Menu menu;
+		private MenuItem menu;
 
 		public MainForm()
 		{
 			InitializeComponent();
-			menu = new Menu.Menu()
+			// TODO: dokoñczyæ
+			menu = new MenuItem()
 			{
-
+				new SimpleMenuItem() {  }
 			};
 		}
 
@@ -19,3 +22,9 @@ namespace PongNet
 		}
 	}
 }
+
+/*
+ A = [x, y]
+ B = [x', y']
+ C = A - B
+*/

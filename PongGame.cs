@@ -2,7 +2,7 @@
 
 namespace PongNet
 {
-    public class Game : UpdatableGameComponent
+    public class PongGame : UpdatableGameComponent
     {
         public override void Update(double deltaTime)
         {
