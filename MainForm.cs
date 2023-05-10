@@ -9,22 +9,25 @@ namespace PongNet.Game
 		public MainForm()
 		{
 			InitializeComponent();
-			// TODO: dokoñczyæ
 			menu = new MenuItem()
 			{
-				new SimpleMenuItem() {  }
+				new SimpleMenuItem("Nowa gra"),
+				new SimpleMenuItem("Ustawienia")
+				{
+					new SimpleMenuItem("Pe³ny ekran"),
+					new SimpleMenuItem("Limit punktów")
+				},
+				new SimpleMenuItem("Koniec")
 			};
+			menu.X = Width / 2 - 100;
+			menu.Y = Height / 2 - 100;
+			menu.Pack();
 		}
 
 		private void MainFormPaint(object sender, PaintEventArgs e)
 		{
-
+			e.Graphics.Clear(Color.Black);
+			menu.Render(e.Graphics);
 		}
 	}
 }
-
-/*
- A = [x, y]
- B = [x', y']
- C = A - B
-*/
