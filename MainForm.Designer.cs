@@ -35,7 +35,11 @@
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(800, 450);
+			FormBorderStyle = FormBorderStyle.FixedSingle;
+			MaximizeBox = false;
+			MinimizeBox = false;
 			Name = "MainForm";
+			StartPosition = FormStartPosition.CenterScreen;
 			Text = "Form1";
 			Paint += MainFormPaint;
 			ResumeLayout(false);

@@ -2,9 +2,10 @@
 {
 	public class SimpleMenuItem : MenuItem
 	{
-		public SimpleMenuItem(string title)
+		public SimpleMenuItem(string title, bool isVisible = true)
 		{
 			Title = title;
+			IsVisible = isVisible;
 		}
 	}
 }

@@ -1,13 +1,9 @@
 ﻿using PongNet.Common;
-using System.Numerics;
-using System.Windows.Forms.Design;
 
 namespace PongNet.Game.Menu
 {
 	public class MenuItem : StatableGameComponent<MenuStates>
 	{
-		public static readonly Font Font = new Font("Courier New", 15.0f, FontStyle.Bold);
-
 		public event EventHandler Enter;
 		public event EventHandler Leave;
 		public string Title { get; set; }
@@ -25,22 +21,30 @@ namespace PongNet.Game.Menu
 		public override void Render(Graphics g)
 		{
 			base.Render(g);
-			g.DrawString(Title, Font, Brushes.White, X, Y);
+			g.DrawString(Title, Default.Font, Default.PrimaryColorBrush, X, Y);
 		}
 
-		// TODO: oprogramować właściwość IsVisible
 		public void Pack()
 		{
 			Pack(this, X, Y);
 		}
 
+		public void AddMany(params MenuItem[] items)
+		{
+			foreach (var item in items)
+			{
+				Add(item);
+			}
+		}
+
 		private void Pack(MenuItem parent, int baseX, int baseY)
 		{
 			int childIndex = 0;
+			
 			foreach (MenuItem child in parent)
 			{
 				child.X = baseX;
-				child.Y = baseY + (int)(Font.Size * 1.35 * childIndex++);
+				child.Y = baseY + (int)(Default.Font.Size * 1.35 * childIndex++);
 				Pack(child, baseX, baseY);
 			}
 		}
