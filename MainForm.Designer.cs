@@ -42,6 +42,7 @@
 			StartPosition = FormStartPosition.CenterScreen;
 			Text = "Form1";
 			Paint += MainFormPaint;
+			KeyUp += MainFormKeyUp;
 			ResumeLayout(false);
 		}
 

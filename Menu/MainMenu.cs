@@ -1,5 +1,4 @@
 ﻿using PongNet.Common;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PongNet.Game.Menu
 {
@@ -19,6 +18,7 @@ namespace PongNet.Game.Menu
 			Y = Default.FormClientHeight / 2 - Default.FormClientHeight / 10;
 		    Pack();
 			IsVisible = true;
+			Children[0].IsChecked = true;
 		}
 
 		public override void Render(Graphics g)
