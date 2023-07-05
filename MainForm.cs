@@ -10,6 +10,7 @@ namespace PongNet.Game
 		public MainForm()
 		{
 			InitializeComponent();
+			DoubleBuffered = true;
 			Text = Default.Title;
 			ClientSize = new Size(Default.FormClientWidth, Default.FormClientHeight);
 			mainMenu = new MainMenu();
@@ -19,6 +20,8 @@ namespace PongNet.Game
 		{
 			mainMenu.Render(e.Graphics);
 		}
+
+
 
 		private void MainFormKeyUp(object sender, KeyEventArgs e)
 		{
@@ -38,6 +41,11 @@ namespace PongNet.Game
 			{
 				mainMenu.Leave();
 			}
+		}
+
+		private void TimerTick(object sender, EventArgs e)
+		{
+			Invalidate();
 		}
 	}
 }

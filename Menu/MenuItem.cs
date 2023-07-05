@@ -4,6 +4,8 @@ namespace PongNet.Game.Menu
 {
 	public class MenuItem : UpdatableGameComponent
 	{
+		public event EventHandler Apply;
+
 		public event EventHandler Check;
 
 		public event EventHandler Uncheck;
@@ -31,33 +33,6 @@ namespace PongNet.Game.Menu
 			}
 		}
 
-		public bool Next()
-		{
-			if (Children.Count == 0)
-			{
-				return false;
-			}
-
-			//int checkedChildIndex = FindCheckedChildIndex();
-
-			return true;
-		}
-
-		public bool Previous()
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public bool Enter()
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public bool Leave()
-		{
-			throw new System.NotImplementedException();
-		}
-
 		public string Title { get; set; }
 
 		public void AddMany(params MenuItem[] items)
@@ -68,9 +43,38 @@ namespace PongNet.Game.Menu
 			}
 		}
 
+		public bool Enter()
+		{
+			MenuItem checkedChild = FindCheckedChild();
+
+			if (checkedChild.Children.Count == 0)
+			{
+				return false;
+			}
+
+			
+
+			return true;
+		}
+
+		public bool Leave()
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public bool Next()
+		{
+			return Advance(+1);
+		}
+
 		public void Pack()
 		{
 			Pack(this, X, Y);
+		}
+
+		public bool Previous()
+		{
+			return Advance(-1);
 		}
 
 		public override void Render(Graphics g)
@@ -87,6 +91,11 @@ namespace PongNet.Game.Menu
 			}
 		}
 
+		protected virtual void OnApply()
+		{
+			Apply?.Invoke(this, EventArgs.Empty);
+		}
+
 		protected virtual void OnCheck()
 		{
 			Check?.Invoke(this, EventArgs.Empty);
@@ -99,6 +108,42 @@ namespace PongNet.Game.Menu
 
 		private bool isChecked;
 
+		private bool Advance(int direction)
+		{
+			if (Children.Count == 0)
+			{
+				return false;
+			}
+
+			int checkedChildIndex = FindCheckedChildIndex();
+			int advanceChildIndex = (checkedChildIndex + direction) % Children.Count;
+			if (advanceChildIndex < 0)
+			{
+				advanceChildIndex = Children.Count - 1;
+			}
+			Children[checkedChildIndex].IsChecked = false;
+			Children[advanceChildIndex].IsChecked = true;
+
+			return true;
+		}
+
+		private int FindCheckedChildIndex()
+		{
+			for (int i = 0; i < Children.Count; i++)
+			{
+				if (Children[i].IsChecked)
+				{
+					return i;
+				}
+			}
+			throw new InvalidOperationException();
+		}
+
+		private MenuItem FindCheckedChild()
+		{
+			return Children[FindCheckedChildIndex()];
+		}
+
 		private void Pack(MenuItem parent, int baseX, int baseY)
 		{
 			int childIndex = 0;
@@ -109,18 +154,6 @@ namespace PongNet.Game.Menu
 				child.Y = baseY + (int)(Default.MenuFont.Size * 1.35 * childIndex++);
 				Pack(child, baseX, baseY);
 			}
-		}
-
-		private MenuItem FindCheckedChildIndex()
-		{
-			foreach (MenuItem child in Children)
-			{
-				if (child.IsChecked)
-				{
-					return child;
-				}
-			}
-			throw new InvalidOperationException();
 		}
 	}
 }
