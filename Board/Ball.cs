@@ -5,10 +5,5 @@ namespace PongNet.Board
 {
     public class Ball : GameComponent
     {
-        public int Radius
-        {
-            get => Radius;
-            protected set => Radius = Width = Height = value;
-        }
     }
 }
