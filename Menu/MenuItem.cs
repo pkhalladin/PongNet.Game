@@ -33,7 +33,14 @@ namespace PongNet.Game.Menu
 
 		public bool Next()
 		{
-			throw new System.NotImplementedException();
+			if (Children.Count == 0)
+			{
+				return false;
+			}
+
+			//int checkedChildIndex = FindCheckedChildIndex();
+
+			return true;
 		}
 
 		public bool Previous()
@@ -102,6 +109,18 @@ namespace PongNet.Game.Menu
 				child.Y = baseY + (int)(Default.MenuFont.Size * 1.35 * childIndex++);
 				Pack(child, baseX, baseY);
 			}
+		}
+
+		private MenuItem FindCheckedChildIndex()
+		{
+			foreach (MenuItem child in Children)
+			{
+				if (child.IsChecked)
+				{
+					return child;
+				}
+			}
+			throw new InvalidOperationException();
 		}
 	}
 }
