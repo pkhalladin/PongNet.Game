@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Board\dtkor41a.enc~" />
+    <None Remove="Board\pedz4xgc.ajl~" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Board\" />
   </ItemGroup>
 
