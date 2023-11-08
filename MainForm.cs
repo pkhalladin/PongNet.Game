@@ -14,14 +14,24 @@ namespace PongNet.Game
 			Text = Default.Title;
 			ClientSize = new Size(Default.FormClientWidth, Default.FormClientHeight);
 			mainMenu = new MainMenu();
+			mainMenu.Children[0].Apply += StartGameApply;
+			mainMenu.Children[1].Apply += ExitGameApply; ;
+		}
+
+		private void StartGameApply(object sender, EventArgs e)
+		{
+			mainMenu.IsVisible = false;
+		}
+
+		private void ExitGameApply(object sender, EventArgs e)
+		{
+			Close();
 		}
 
 		private void MainFormPaint(object sender, PaintEventArgs e)
 		{
 			mainMenu.Render(e.Graphics);
 		}
-
-
 
 		private void MainFormKeyUp(object sender, KeyEventArgs e)
 		{
@@ -33,13 +43,10 @@ namespace PongNet.Game
 			{
 				mainMenu.Next();
 			}
-			else if (e.KeyCode == Keys.D || e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
+			else if (e.KeyCode == Keys.D || e.KeyCode == Keys.Right
+				|| e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
 			{
 				mainMenu.Enter();
-			}
-			else if (e.KeyCode == Keys.A || e.KeyCode == Keys.Escape || e.KeyCode == Keys.Back)
-			{
-				mainMenu.Leave();
 			}
 		}
 

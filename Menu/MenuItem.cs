@@ -33,6 +33,19 @@ namespace PongNet.Game.Menu
 			}
 		}
 
+		public override bool IsVisible 
+		{ 
+			get => base.IsVisible;
+			set
+			{
+				base.IsVisible = value;
+				foreach (var child in Children)
+				{
+					child.isVisible = true;
+				}
+			}
+		}
+
 		public string Title { get; set; }
 
 		public void AddMany(params MenuItem[] items)
@@ -45,25 +58,37 @@ namespace PongNet.Game.Menu
 
 		public bool Enter()
 		{
-			MenuItem checkedChild = FindCheckedChild();
-
-			if (checkedChild.Children.Count == 0)
+			if (!IsVisible)
 			{
 				return false;
 			}
 
-			
+			MenuItem checkedChild = FindCheckedChild();
 
+			if (checkedChild == null)
+			{
+				return false;
+			}
+			checkedChild.OnApply();
 			return true;
 		}
 
 		public bool Leave()
 		{
+			if (!IsVisible)
+			{
+				return false;
+			}
+
 			throw new System.NotImplementedException();
 		}
 
 		public bool Next()
 		{
+			if (!IsVisible)
+			{
+				return false;
+			}
 			return Advance(+1);
 		}
 
@@ -74,21 +99,27 @@ namespace PongNet.Game.Menu
 
 		public bool Previous()
 		{
+			if (!IsVisible)
+			{
+				return false;
+			}
 			return Advance(-1);
 		}
 
 		public override void Render(Graphics g)
-		{
-			base.Render(g);
-			if (IsVisible)
+		{	
+			if (!IsVisible)
 			{
-				if (IsChecked)
-				{
-					g.DrawString(Default.MenuCheckedPrefix, Default.MenuFont,
-						Default.PrimaryColorBrush, X - Default.MenuFont.Size * 3.0f, Y);
-				}
-				g.DrawString(Title, Default.MenuFont, Default.PrimaryColorBrush, X, Y);
+				return;
 			}
+
+			if (IsChecked)
+			{
+				g.DrawString(Default.MenuCheckedPrefix, Default.MenuFont,
+					Default.PrimaryColorBrush, X - Default.MenuFont.Size * 3.0f, Y);
+			}
+			g.DrawString(Title, Default.MenuFont, Default.PrimaryColorBrush, X, Y);
+			base.Render(g);
 		}
 
 		protected virtual void OnApply()
